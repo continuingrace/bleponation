@@ -100,7 +100,8 @@ exports.handler = async (event) => {
       "news": "최근 관련 소식 (50~70자)",
       "newsSource": "출처 기관명",
       "newsDate": "YYYY-MM 형식 날짜",
-      "scripture": "성경구절 (예: 마태복음 9:37-38)",
+      "scripture": "성경 책명 장:절 (예: 마태복음 9:37-38)",
+      "scriptureText": "개역개정 성경 본문 (예: 추수할 것은 많되 일꾼이 적으니 그러므로 추수하는 주인에게 청하여 추수할 일꾼들을 보내 주소서 하라)",
       "prayerSource": "Operation World 또는 Joshua Project 또는 OMF International Korea 또는 GMS 총회선교회 또는 KWMA 또는 순교자의 소리",
       "urgency": "high"
     },
@@ -122,7 +123,8 @@ exports.handler = async (event) => {
       "news": "최근 관련 소식",
       "newsSource": "출처 기관명",
       "newsDate": "YYYY-MM 형식 날짜",
-      "scripture": "성경구절",
+      "scripture": "성경 책명 장:절",
+      "scriptureText": "개역개정 성경 본문",
       "prayerSource": "기도자료 출처",
       "urgency": "medium"
     },
@@ -144,7 +146,8 @@ exports.handler = async (event) => {
       "news": "최근 관련 소식",
       "newsSource": "출처 기관명",
       "newsDate": "YYYY-MM 형식 날짜",
-      "scripture": "성경구절",
+      "scripture": "성경 책명 장:절",
+      "scriptureText": "개역개정 성경 본문",
       "prayerSource": "기도자료 출처",
       "urgency": "high"
     }
@@ -155,7 +158,9 @@ exports.handler = async (event) => {
 - 날짜 ${today}를 시드로 매일 다른 나라 선택
 - 실제 미전도 종족 국가와 선교 현실 반영
 - newsDate는 최근 6개월 이내로
-- 각 category는 반드시 missionary, nation, mission 하나씩`
+- 각 category는 반드시 missionary, nation, mission 하나씩
+- scriptureText는 반드시 대한성서공회 개역개정판 원문 그대로 정확하게 기입
+- scripture 주소와 scriptureText 본문이 반드시 일치해야 함`
       }]
     });
 

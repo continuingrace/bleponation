@@ -33,7 +33,7 @@ const FALLBACK = {
       countryInfo: '이란은 세계에서 가장 빠르게 기독교가 성장하는 나라 중 하나입니다. 수천 개의 가정교회가 지하에서 운영 중입니다.',
       news: '2024년 이란 당국이 수도 테헤란과 이스파한에서 가정교회 지도자 수십 명을 체포했습니다.',
       newsSource: '순교자의 소리 Korea', newsDate: '2024-11',
-      scripture: '마태복음 10:28', prayerSource: 'Operation World',
+      scripture: '마태복음 10:28', scriptureText: '몸은 죽여도 영혼은 능히 죽이지 못하는 자들을 두려워하지 말고 오직 몸과 영혼을 능히 지옥에 멸하실 수 있는 이를 두려워하라', prayerSource: 'Operation World',
     },
     {
       id: 'afghanistan', category: 'nation', country: '아프가니스탄', countryEn: 'Afghanistan',
@@ -45,7 +45,7 @@ const FALLBACK = {
       countryInfo: '아프가니스탄은 세계에서 기독교인에게 가장 위험한 나라 1위입니다. 성경 소지만으로도 사형에 처할 수 있습니다.',
       news: '오픈도어즈 2025 박해지수에서 아프가니스탄은 3년 연속 최상위를 기록했습니다.',
       newsSource: 'Open Doors Korea', newsDate: '2025-01',
-      scripture: '요한복음 16:33', prayerSource: 'Operation World',
+      scripture: '요한복음 16:33', scriptureText: '이것을 너희에게 이르는 것은 너희로 내 안에서 평안을 누리게 하려 함이라 세상에서는 너희가 환난을 당하나 담대하라 내가 세상을 이기었노라', prayerSource: 'Operation World',
     },
     {
       id: 'north_korea', category: 'mission', country: '북한', countryEn: 'North Korea',
@@ -57,7 +57,7 @@ const FALLBACK = {
       countryInfo: '북한은 지구상 마지막 완전 폐쇄 국가입니다. 성경 소지 시 정치범 수용소 수감이 가능합니다.',
       news: '극동방송(FEBC)이 2024년 북한을 향한 한국어 라디오 방송을 하루 20시간으로 확대했습니다.',
       newsSource: '극동방송 / GMS', newsDate: '2024-09',
-      scripture: '이사야 60:2', prayerSource: 'GMS 총회선교회',
+      scripture: '이사야 60:2', scriptureText: '보라 어둠이 땅을 덮을 것이며 캄캄함이 만민을 가리려니와 오직 여호와께서 네 위에 임하실 것이며 그의 영광이 네 위에 나타나리니', prayerSource: 'GMS 총회선교회',
     },
   ],
 }

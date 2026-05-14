@@ -165,9 +165,14 @@ export default function PrayerCard({ prayer, prayed, onToggle, idx, todayStr }) 
             </p>
 
             {/* Scripture */}
-            <div style={{ background: '#FAF8F3', borderLeft: `3px solid ${cat.color}`, padding: '11px 14px', borderRadius: '0 8px 8px 0', marginBottom: 12 }}>
-              <div style={{ fontSize: 9, color: '#C0B098', letterSpacing: '0.06em', marginBottom: 4 }}>말씀</div>
-              <div style={{ fontSize: 13, color: '#7A6A50', fontStyle: 'italic', fontWeight: 500 }}>{prayer.scripture}</div>
+            <div style={{ background: '#FAF8F3', borderLeft: `3px solid ${cat.color}`, padding: '12px 14px', borderRadius: '0 8px 8px 0', marginBottom: 12 }}>
+              <div style={{ fontSize: 9, color: '#C0B098', letterSpacing: '0.06em', marginBottom: 8 }}>말씀 · 개역개정</div>
+              {prayer.scriptureText && (
+                <div style={{ fontSize: 13, color: '#3A3020', lineHeight: 1.8, marginBottom: 8, wordBreak: 'keep-all' }}>
+                  &ldquo;{prayer.scriptureText}&rdquo;
+                </div>
+              )}
+              <div style={{ fontSize: 11, color: '#A09070', fontWeight: 600 }}>— {prayer.scripture}</div>
             </div>
 
             {/* News */}
