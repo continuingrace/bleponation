@@ -356,6 +356,7 @@ export default function App() {
                   날짜를 선택하면 그 날의 기도 기록을 볼 수 있습니다
                 </div>
             }
+            <BackupRestore storageData={storageData} onRestore={handleRestore} />
           </div>
         )}
 

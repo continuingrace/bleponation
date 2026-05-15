@@ -71,7 +71,7 @@ exports.handler = async (event) => {
   try {
     const message = await client.messages.create({
       model: "claude-haiku-4-5",
-      max_tokens: 1800,
+      max_tokens: 3000,
       messages: [{
         role: "user",
         content: `당신은 복음주의 세계 선교 전문가입니다. 오늘(${today}) 열방 기도제목 3개를 생성하세요.${newsContext}
@@ -156,16 +156,29 @@ exports.handler = async (event) => {
 
 요구사항:
 - 날짜 ${today}를 시드로 매일 다른 나라 선택
-- 실제 미전도 종족 국가와 선교 현실 반영
-- newsDate는 최근 6개월 이내로
-- 각 category는 반드시 missionary, nation, mission 하나씩
-- scriptureText는 반드시 대한성서공회 개역개정판 원문 그대로 정확하게 기입
-- scripture 주소와 scriptureText 본문이 반드시 일치해야 함`
+- 실제 미전도 종족/박해 국가 반영
+- newsDate는 최근 6개월 이내
+- category는 반드시 missionary, nation, mission 각 하나씩
+- scriptureText: 개역개정 본문 정확히 (짧은 구절 1~2절로 제한)
+- JSON만 출력, 마크다운 없이`
       }]
     });
 
-    const raw = message.content[0].text.replace(/```json|```/g, "").trim();
+    let raw = message.content[0].text.replace(/```json|```/g, "").trim();
+    // JSON이 잘린 경우 복구 시도
+    if (!raw.endsWith('}')) {
+      const lastBrace = raw.lastIndexOf('}');
+      if (lastBrace > 0) raw = raw.substring(0, lastBrace + 1);
+      // prayers 배열이 닫히지 않은 경우
+      const lastBracket = raw.lastIndexOf(']');
+      if (lastBracket < 0) raw = raw + ']}';
+      else if (!raw.includes(']}')) raw = raw + ']}';
+    }
     const data = JSON.parse(raw);
+    // prayers가 3개 미만이면 에러
+    if (!data.prayers || data.prayers.length < 1) {
+      throw new Error('prayers 데이터 부족');
+    }
 
     // 캐시 저장
     cache = { date: todayKST, data };
