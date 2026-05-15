@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import PrayerCard from './components/PrayerCard'
-import Calendar from './components/Calendar'
+import Calendar, { BackupRestore } from './components/Calendar'
 import HistoryView from './components/HistoryView'
 import { loadStorage, saveStorage, dateKey, formatDateKO } from './utils/storage'
 
@@ -142,6 +142,12 @@ export default function App() {
       saveStorage(next)
       return next
     })
+  }
+
+  // 백업 복구
+  const handleRestore = (restoredData) => {
+    setStorageData(restoredData)
+    saveStorage(restoredData)
   }
 
   // 관리자 새로 생성

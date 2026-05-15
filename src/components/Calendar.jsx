@@ -118,3 +118,97 @@ const navBtn = {
   cursor: 'pointer', fontSize: 16, color: '#888',
   fontFamily: 'inherit',
 }
+
+// ── 백업/복구 컴포넌트
+export function BackupRestore({ storageData, onRestore }) {
+  const fileInputRef = { current: null }
+
+  const handleExport = () => {
+    const exportData = {
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      appName: '열방을 위한 기도',
+      data: storageData,
+    }
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `열방기도_백업_${new Date().toLocaleDateString('ko-KR').replace(/\. /g, '-').replace('.', '')}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const handleImport = (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result)
+        // 버전 1 형식 확인
+        if (parsed.version === 1 && parsed.data) {
+          if (window.confirm(`백업 파일을 복구하시겠습니까?\n(${parsed.exportedAt?.slice(0,10)} 기록)`)) {
+            onRestore(parsed.data)
+            alert('기도 기록이 복구되었습니다 🙏')
+          }
+        } else {
+          alert('올바른 백업 파일이 아닙니다.')
+        }
+      } catch {
+        alert('파일을 읽는 중 오류가 발생했습니다.')
+      }
+      e.target.value = ''
+    }
+    reader.readAsText(file)
+  }
+
+  return (
+    <div style={{
+      background: '#FFF', borderRadius: 14,
+      border: '1px solid #EDE8E0', padding: '16px 18px',
+      marginTop: 12,
+    }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: '#B0A898', letterSpacing: '0.08em', marginBottom: 12 }}>
+        기도 기록 백업
+      </div>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <button
+          onClick={handleExport}
+          style={{
+            flex: 1, padding: '10px', borderRadius: 10,
+            border: '1.5px solid #E0DACE', background: '#FAF8F4',
+            color: '#7A6E60', fontSize: 12, fontWeight: 600,
+            cursor: 'pointer', fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+          }}
+        >
+          📤 백업 내보내기
+        </button>
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          style={{
+            flex: 1, padding: '10px', borderRadius: 10,
+            border: '1.5px solid #E0DACE', background: '#FAF8F4',
+            color: '#7A6E60', fontSize: 12, fontWeight: 600,
+            cursor: 'pointer', fontFamily: 'inherit',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+          }}
+        >
+          📥 백업 복구하기
+        </button>
+      </div>
+      <div style={{ fontSize: 10, color: '#C0B8A8', marginTop: 8, lineHeight: 1.6 }}>
+        기도 기록을 JSON 파일로 저장하거나 복구합니다.<br />
+        기기 변경 또는 앱 재설치 시 사용하세요.
+      </div>
+      <input
+        type="file"
+        accept=".json"
+        onChange={handleImport}
+        ref={el => fileInputRef.current = el}
+        style={{ display: 'none' }}
+      />
+    </div>
+  )
+}
