@@ -172,7 +172,7 @@ export default function App() {
     : null  // 과거 날짜는 캐시에서 복원 (추후 확장 가능)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F6F3EE', fontFamily: "'Pretendard', 'Google Sans', 'Apple SD Gothic Neo', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#F5F5F7', fontFamily: "'Pretendard', 'Google Sans', 'Apple SD Gothic Neo', sans-serif" }}>
       <style>{globalStyles}</style>
 
       <div style={{ maxWidth: 480, margin: '0 auto', padding: '44px 16px 80px' }}>

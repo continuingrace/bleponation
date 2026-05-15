@@ -3,9 +3,9 @@ import { generatePrayerCard } from '../utils/prayerCard'
 import { dateKey } from '../utils/storage'
 
 const CAT = {
-  missionary: { label: '선교사', color: '#9B7B5A', bg: '#FBF6F0', border: '#E8D5BB' },
-  nation:     { label: '나라',   color: '#4E7C6E', bg: '#F0F6F3', border: '#BAD9CF' },
-  mission:    { label: '선교',   color: '#5E5E8A', bg: '#F2F2F8', border: '#C8C8E4' },
+  missionary: { label: '선교사', color: '#C13B3B', bg: '#F9ECEC', border: '#E8C4C4' },
+  nation:     { label: '나라',   color: '#1A6B9A', bg: '#EAF2F8', border: '#B8D4E8' },
+  mission:    { label: '선교',   color: '#1E7E5E', bg: '#EAF4EF', border: '#B8DDD0' },
 }
 
 const URGENCY = {
