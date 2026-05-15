@@ -172,7 +172,7 @@ export default function App() {
     : null  // 과거 날짜는 캐시에서 복원 (추후 확장 가능)
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F5F5F7', fontFamily: "'Pretendard', 'Google Sans', 'Apple SD Gothic Neo', sans-serif" }}>
+    <div style={{ minHeight: '100vh', background: '#FFFFFF', fontFamily: "'Pretendard', 'Google Sans', 'Apple SD Gothic Neo', sans-serif" }}>
       <style>{globalStyles}</style>
 
       <div style={{ maxWidth: 480, margin: '0 auto', padding: '44px 16px 80px' }}>
@@ -206,7 +206,7 @@ export default function App() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             {/* Progress circles */}
             <div style={{ display: 'flex', gap: 5 }}>
-              {['#9B7B5A', '#4E7C6E', '#5E5E8A'].map((color, i) => {
+              {['#7247C8', '#7247C8', '#7247C8'].map((color, i) => {
                 const p = todayPrayers[i]
                 const done = p && todayPrayed.includes(p.id || p.country)
                 return (

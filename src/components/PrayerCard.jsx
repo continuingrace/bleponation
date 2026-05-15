@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { generatePrayerCard } from '../utils/prayerCard'
+import { openPrayerCard } from '../utils/prayerCard'
 import { dateKey } from '../utils/storage'
 
 const CAT = {
-  missionary: { label: '선교사', color: '#C13B3B', bg: '#F9ECEC', border: '#E8C4C4' },
-  nation:     { label: '나라',   color: '#1A6B9A', bg: '#EAF2F8', border: '#B8D4E8' },
-  mission:    { label: '선교',   color: '#1E7E5E', bg: '#EAF4EF', border: '#B8DDD0' },
+  missionary: { label: '선교사', color: '#7247C8', bg: '#F0EBFA', border: '#D4C0F0' },
+  nation:     { label: '나라',   color: '#7247C8', bg: '#F0EBFA', border: '#D4C0F0' },
+  mission:    { label: '선교',   color: '#7247C8', bg: '#F0EBFA', border: '#D4C0F0' },
 }
 
 const URGENCY = {
@@ -31,21 +31,12 @@ function MiniBar({ value, max = 30, color, label, suffix = '%' }) {
 
 export default function PrayerCard({ prayer, prayed, onToggle, idx, todayStr }) {
   const [open, setOpen] = useState(false)
-  const [downloading, setDownloading] = useState(false)
   const cat = CAT[prayer.category] || CAT.mission
   const urg = URGENCY[prayer.urgency] || URGENCY.medium
 
-  const handleDownload = async (e) => {
+  const handleDownload = (e) => {
     e.stopPropagation()
-    setDownloading(true)
-    try {
-      await generatePrayerCard(prayer, todayStr)
-    } catch (err) {
-      alert('카드 생성 중 오류가 발생했습니다.')
-      console.error(err)
-    } finally {
-      setDownloading(false)
-    }
+    openPrayerCard(prayer, todayStr)
   }
 
   return (
@@ -195,18 +186,16 @@ export default function PrayerCard({ prayer, prayed, onToggle, idx, todayStr }) 
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
               <button
                 onClick={handleDownload}
-                disabled={downloading}
+                
                 style={{
                   background: 'transparent',
                   border: '1.5px solid #D8D2C8',
                   color: '#888', padding: '8px 16px',
                   borderRadius: 24, fontSize: 12, fontWeight: 500,
-                  cursor: downloading ? 'not-allowed' : 'pointer',
-                  fontFamily: 'inherit', transition: 'all 0.2s',
-                  opacity: downloading ? 0.6 : 1,
+                  cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
                 }}
               >
-                {downloading ? '생성 중…' : '📥 카드 저장'}
+                🔗 카드 보기
               </button>
               <button
                 onClick={() => onToggle(prayer.id || prayer.country)}
