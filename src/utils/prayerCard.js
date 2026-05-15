@@ -110,16 +110,17 @@ export function openPrayerCard(prayer, date) {
     .country-ko {
       font-family: 'Google Sans', 'Pretendard', sans-serif;
       font-size: 38px;
-      font-weight: 300;
+      font-weight: 600;
       color: #3A3A3A;
       line-height: 1;
     }
     .country-en {
       font-family: 'Google Sans', 'Pretendard', sans-serif;
-      font-size: 28px;
+      font-size: 18px;
       font-weight: 300;
-      color: rgba(58,58,58,0.45);
+      color: rgba(58,58,58,0.38);
       line-height: 1;
+      letter-spacing: 0.3px;
     }
 
     /* 인포 */
@@ -271,10 +272,10 @@ export function openPrayerCard(prayer, date) {
 
     /* 푸터 */
     .footer {
-      padding: 14px 22px 22px;
+      padding: 16px 22px 16px;
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
     }
     .footer-left {
       font-size: 10px;
@@ -400,7 +401,7 @@ export function openPrayerCard(prayer, date) {
       <div class="footer">
         <div class="footer-left">
           기도 자료: ${prayer.prayerSource || ''}<br/>
-          관련 소식 출처: ${prayer.newsSource || ''}
+          관련 소식: ${prayer.newsSource || ''}
         </div>
         <div class="footer-right">
           <div class="footer-app">열방을 위한 기도</div>
@@ -411,8 +412,8 @@ export function openPrayerCard(prayer, date) {
     </div>
 
     <div class="save-guide">
-      📸 화면을 길게 누르거나<br/>
-      공유 버튼 → <strong>이미지로 저장</strong>하세요
+      📸 <strong>스크린샷</strong>으로 저장하세요<br/>
+      <span style="color:#AAA;font-size:11px;">전원 버튼 + 볼륨 올리기 (iPhone)<br/>이후 사진 앱에서 카드 영역만 크롭</span>
     </div>
   </div>
 </body>

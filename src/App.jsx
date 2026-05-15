@@ -182,7 +182,7 @@ export default function App() {
           <div style={{ fontSize: 11, letterSpacing: '0.2em', color: '#C0B098', fontWeight: 600, marginBottom: 8 }}>
             PRAYER FOR THE NATIONS
           </div>
-          <h1 style={{ fontSize: 30, fontWeight: 900, color: '#1E1C18', letterSpacing: '-0.04em', marginBottom: 8 }}>
+          <h1 style={{ fontSize: 30, fontWeight: 700, color: '#1E1C18', letterSpacing: '-0.04em', marginBottom: 8 }}>
             열방을 위한 기도
           </h1>
           <p style={{ fontSize: 12, color: '#B0A898', fontStyle: 'italic', lineHeight: 1.7 }}>
