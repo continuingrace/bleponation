@@ -434,7 +434,20 @@ function getCountryCode(countryEn = '') {
     'Nigeria': 'ng', 'Sudan': 'sd', 'Syria': 'sy', 'Iraq': 'iq',
     'Yemen': 'ye', 'Ukraine': 'ua', 'Russia': 'ru', 'Cambodia': 'kh',
     'Vietnam': 'vn', 'Thailand': 'th', 'Laos': 'la', 'Mongolia': 'mn',
-    'Kazakhstan': 'kz', 'Uzbekistan': 'uz', 'Bangladesh': 'bd', 'Nepal': 'np',
+    'Kazakhstan': 'kz', 'Uzbekistan': 'uz',
+    'Russia': 'ru', 'Ukraine': 'ua', 'Belarus': 'by', 'Georgia': 'ge',
+    'Armenia': 'am', 'Kyrgyzstan': 'kg', 'Tajikistan': 'tj',
+    'Turkmenistan': 'tm', 'Azerbaijan': 'az', 'Moldova': 'md',
+    'Cuba': 'cu', 'Venezuela': 've', 'Colombia': 'co', 'Peru': 'pe',
+    'Chile': 'cl', 'Argentina': 'ar', 'Mexico': 'mx',
+    'South Africa': 'za', 'Zimbabwe': 'zw', 'Mozambique': 'mz',
+    'Angola': 'ao', 'Congo': 'cd', 'Cameroon': 'cm', 'Libya': 'ly',
+    'Algeria': 'dz', 'Tunisia': 'tn', 'Mali': 'ml', 'Niger': 'ne',
+    'Senegal': 'sn', 'Ghana': 'gh', 'Burkina Faso': 'bf', 'Chad': 'td',
+    'Philippines': 'ph', 'Malaysia': 'my', 'Singapore': 'sg',
+    'Sri Lanka': 'lk', 'Bhutan': 'bt', 'Maldives': 'mv',
+    'Israel': 'il', 'Palestine': 'ps', 'Jordan': 'jo', 'Lebanon': 'lb',
+    'Kuwait': 'kw', 'Qatar': 'qa', 'UAE': 'ae', 'Oman': 'om', 'Bahrain': 'bh', 'Bangladesh': 'bd', 'Nepal': 'np',
   }
   return map[countryEn] || 'un'
 }
