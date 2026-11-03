@@ -64,11 +64,12 @@ const FALLBACK = {
 
 // ─── API CALL ────────────────────────────────────────────────────────────────
 async function fetchPrayers(adminKey = '') {
-  const url = adminKey
-    ? `/api/get-prayers?admin_key=${encodeURIComponent(adminKey)}`
-    : '/api/get-prayers'
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const headers = adminKey ? { 'X-Admin-Key': adminKey } : {}
+  const res = await fetch('/api/get-prayers', { headers })
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.error || `HTTP ${res.status}`)
+  }
   return res.json()
 }
 

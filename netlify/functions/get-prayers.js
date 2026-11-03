@@ -18,7 +18,7 @@ function getTodayKST() {
 exports.handler = async (event) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-Admin-Key",
     "Content-Type": "application/json",
   };
 
@@ -26,8 +26,19 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: "" };
   }
 
-  const params = event.queryStringParameters || {};
-  const forceRefresh = params.admin_key === process.env.ADMIN_PASSWORD;
+  if (event.httpMethod !== "GET") {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) };
+  }
+
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const suppliedAdminKey = event.headers?.["x-admin-key"] || "";
+  const hasAdminAttempt = Boolean(suppliedAdminKey);
+
+  if (hasAdminAttempt && (!adminPassword || suppliedAdminKey !== adminPassword)) {
+    return { statusCode: 401, headers, body: JSON.stringify({ error: "관리자 비밀번호가 올바르지 않습니다." }) };
+  }
+
+  const forceRefresh = Boolean(adminPassword) && suppliedAdminKey === adminPassword;
   const todayKST = getTodayKST();
 
   // 캐시 유효하면 반환
@@ -192,7 +203,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: "생성 실패", detail: err.message }),
+      body: JSON.stringify({ error: "기도제목을 생성하지 못했습니다. 잠시 후 다시 시도해 주세요." }),
     };
   }
 };
