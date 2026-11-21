@@ -2,6 +2,7 @@
   "name": "nations-prayer-functions",
   "version": "1.0.0",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.37.0"
+    "@anthropic-ai/sdk": "^0.37.0",
+    "@netlify/blobs": "^10.7.0"
   }
 }

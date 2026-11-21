@@ -7,16 +7,35 @@ const CAT_LABEL = {
   mission: '선교',
 }
 
+
+// 기도제목 필드는 Claude/RSS에서 온 텍스트이므로 카드 HTML에 넣기 전에 이스케이프한다.
+const ESCAPE_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
+
+export function escapeHtml(value) {
+  if (value === null || value === undefined) return ''
+  return String(value).replace(/[&<>"']/g, (ch) => ESCAPE_MAP[ch])
+}
+
+function escapeFields(prayer) {
+  const source = prayer && typeof prayer === 'object' ? prayer : {}
+  const out = {}
+  for (const [key, value] of Object.entries(source)) {
+    out[key] = typeof value === 'string' ? escapeHtml(value) : value
+  }
+  return out
+}
+
 export function openPrayerCard(prayer, date) {
-  const catLabel = CAT_LABEL[prayer.category] || '기도'
-  const pct = Math.min((prayer.evangelicalRate || 0) / 30 * 100, 100).toFixed(1)
+  const p = escapeFields(prayer)
+  const catLabel = CAT_LABEL[p.category] || '기도'
+  const pct = Math.min((Number(p.evangelicalRate) || 0) / 30 * 100, 100).toFixed(1)
 
   const html = `<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=390, initial-scale=1.0" />
-  <title>기도카드 — ${prayer.country}</title>
+  <title>기도카드 — ${p.country}</title>
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400&display=swap');
@@ -315,7 +334,7 @@ export function openPrayerCard(prayer, date) {
       <div class="header">
         <div>
           <div class="pray-label">PRAY FOR THE NATIONS</div>
-          <div class="date">${date}</div>
+          <div class="date">${escapeHtml(date)}</div>
         </div>
         <div class="badge">${catLabel}</div>
       </div>
@@ -324,17 +343,17 @@ export function openPrayerCard(prayer, date) {
 
       <!-- 국가 -->
       <div class="country-section">
-        <div class="region">${prayer.region || ''}</div>
+        <div class="region">${p.region || ''}</div>
         <div class="country-row">
           <img
             class="flag-img"
             src="https://flagcdn.com/w80/${getCountryCode(prayer.countryEn)}.png"
             onerror="this.style.display='none'"
-            alt="${prayer.country}"
+            alt="${p.country}"
           />
           <div class="country-names">
-            <span class="country-ko">${prayer.country || ''}</span>
-            <span class="country-en">${prayer.countryEn || ''}</span>
+            <span class="country-ko">${p.country || ''}</span>
+            <span class="country-en">${p.countryEn || ''}</span>
           </div>
         </div>
       </div>
@@ -346,11 +365,11 @@ export function openPrayerCard(prayer, date) {
         <div class="info-row">
           <div class="info-col">
             <div class="info-label">인구 수</div>
-            <div class="info-value">${prayer.population || '-'}</div>
+            <div class="info-value">${p.population || '-'}</div>
           </div>
           <div class="info-col">
             <div class="info-label">종교 분포</div>
-            <div class="info-value">${prayer.religion || '-'}</div>
+            <div class="info-value">${p.religion || '-'}</div>
           </div>
         </div>
       </div>
@@ -359,14 +378,14 @@ export function openPrayerCard(prayer, date) {
       <div class="bar-section">
         <div class="bar-header">
           <span class="bar-label">복음화율</span>
-          <span class="bar-pct">${prayer.evangelicalRate || 0}%</span>
+          <span class="bar-pct">${Number(p.evangelicalRate) || 0}%</span>
         </div>
         <div class="bar-bg">
           <div class="bar-fill" style="width:${pct}%"></div>
         </div>
         <div class="bar-sub">
-          <span>교회: 약 ${(prayer.churches || 0).toLocaleString()}</span>
-          <span>파송 선교사: 약 ${prayer.missionaries || 0}명</span>
+          <span>교회: 약 ${(Number(p.churches) || 0).toLocaleString()}</span>
+          <span>파송 선교사: 약 ${Number(p.missionaries) || 0}명</span>
         </div>
       </div>
 
@@ -375,23 +394,23 @@ export function openPrayerCard(prayer, date) {
       <!-- 기도 -->
       <div class="prayer-section">
         <div class="prayer-label">오늘의 기도</div>
-        <div class="prayer-title">${prayer.title || ''}</div>
-        <div class="prayer-body">${prayer.body || ''}</div>
+        <div class="prayer-title">${p.title || ''}</div>
+        <div class="prayer-body">${p.body || ''}</div>
       </div>
 
       <!-- 말씀 블록 -->
       <div class="scripture-block">
         <div class="scripture-label">말씀 · 개역개정</div>
-        <div class="scripture-text">${prayer.scriptureText ? `"${prayer.scriptureText}"` : ''}</div>
-        <div class="scripture-ref">${prayer.scripture || ''}</div>
+        <div class="scripture-text">${p.scriptureText ? `"${p.scriptureText}"` : ''}</div>
+        <div class="scripture-ref">${p.scripture || ''}</div>
       </div>
 
-      ${prayer.news ? `
+      ${(typeof prayer.news === 'string' && prayer.news.trim()) ? `
       <!-- 뉴스 블록 -->
       <div class="news-block">
         <div class="news-label">관련 소식</div>
-        <div class="news-text">${prayer.news}</div>
-        <div class="news-source">출처: ${prayer.newsSource || ''} / ${prayer.newsDate || ''}</div>
+        <div class="news-text">${p.news}</div>
+        <div class="news-source">출처: ${p.newsSource || ''} / ${p.newsDate || ''}</div>
       </div>
       ` : ''}
 
@@ -400,8 +419,8 @@ export function openPrayerCard(prayer, date) {
       <!-- 푸터 -->
       <div class="footer">
         <div class="footer-left">
-          기도 자료: ${prayer.prayerSource || ''}<br/>
-          관련 소식: ${prayer.newsSource || ''}
+          기도 자료: ${p.prayerSource || ''}<br/>
+          관련 소식: ${p.newsSource || ''}
         </div>
         <div class="footer-right">
           <div class="footer-app">열방을 위한 기도</div>
